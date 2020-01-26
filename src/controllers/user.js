@@ -20,6 +20,6 @@ exports.login = async (req, res) => {
         return res.status(200).json({user, token});
 
     } catch (error) {
-        return res.status(error.status || 500).json(error.message || error);
+        return res.status(error.status || 500).json({message: error.message || error});
     }
 }

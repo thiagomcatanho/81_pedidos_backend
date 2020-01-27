@@ -21,11 +21,11 @@ exports.show = async (req, res) => {
 
         if (!id) throw { message: 'Id não informado', status: 400 };
         if (isNaN(id)) throw { message: 'Id invalido', status: 400 };
+        if (id < 0) throw { message: '`id` não pode ser menor ou igual 0', status: 400 };
 
         const category = await productCategoryModel.get(id);
 
         if(!category) throw { message: 'Categoria inexistente ou excluida', status: 404};
-
 
         return res.status(200).json(category);
 
@@ -41,7 +41,7 @@ exports.store = async (req, res) => {
     try {
 
         if (!category) throw { message: '`category` não informada', status: 400 };
-        if (!category.name || category.name.trim().length <= 0) throw { message: '`name` não informado', status: 400 };
+        if (!category.name || category.name.trim().length <= 0) throw { message: '`name` não informado ou vazio', status: 400 };
 
         const result = await productCategoryModel.create(category);
 
@@ -60,6 +60,7 @@ exports.update = async (req, res) => {
 
         if (!id) throw { message: 'Id não informado', status: 400 };
         if (isNaN(id)) throw { message: 'Id invalido', status: 400 };
+        if (id < 0) throw { message: '`id` não pode ser menor ou igual 0', status: 400 };
         if (!category) throw { message: '`category` não informada', status: 400 };
         if (!category.name || category.name.trim().length <= 0) throw { message: '`name` não informado', status: 400 };
 
@@ -80,7 +81,8 @@ exports.destroy = async (req, res) => {
     try {
         if (!id) throw { message: 'Id não informado', status: 400 };
         if (isNaN(id)) throw { message: 'Id invalido', status: 400 };
-
+        if (id <= 0) throw { message: '`id` não pode ser menor ou igual 0', status: 400 };
+        
         if(!await productCategoryModel.get(id)) throw { message: 'Categoria inexistente ou excluida', status: 404};
 
         const result = await productCategoryModel.delete(id);

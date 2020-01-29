@@ -17,6 +17,7 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "jshint": "^2.11.0",
     "nodemon": "^2.0.2"
   }
 }

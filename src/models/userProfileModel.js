@@ -1,25 +1,25 @@
 const connection = require('../services/database').getConnection();
 
-const table = 'product_category';
+const table = 'user_profile';
 
 exports.list = async () => {
 
     const list = await connection(table)
         .select(
             `id`,
-            `categoryName`
+            `profileName`
         )
-        .where(`${table}.visible`, true);
+        .where('visible', true);
 
     return list;
 }
 
 exports.get = async (id) => {
 
-    const category = await connection(table)
+    const profile = await connection(table)
         .select(
             `id`,
-            `categoryName`
+            `profileName`
         )
         .where({
             id,
@@ -27,20 +27,20 @@ exports.get = async (id) => {
         })
         .first();
 
-    return category;
+    return profile;
 }
 
-exports.create = async (category) => {
+exports.create = async (profile) => {
 
     const result = connection(table)
         .insert({
-            ...category
+            ...profile
         });
 
     return result;
 }
 
-exports.update = async (category, id) => {
+exports.update = async (profile, id) => {
 
     const result = connection(table)
         .where({
@@ -48,7 +48,7 @@ exports.update = async (category, id) => {
             visible: true
         })
         .update({
-            ...category
+            ...profile
         });
 
     return result;
@@ -62,7 +62,7 @@ exports.delete = async (id) => {
         })
         .update({
             visible: false
-        });
+        })
 
     return result;
 }

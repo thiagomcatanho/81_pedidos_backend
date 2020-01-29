@@ -1,11 +1,18 @@
 const router = require('express').Router();
 const { authenticate } = require('./middleware/auth');
 
+const userProfileController = require('./controllers/userProfile');
 const userController = require('./controllers/user');
 const productCategoryController = require('./controllers/productCategory');
 const productController = require('./controllers/product');
 
 router.post('/user/auth', userController.login);
+
+router.get('/user_profile', authenticate, userProfileController.index);
+router.get('/user_profile/:id', authenticate, userProfileController.show);
+router.post('/user_profile', authenticate, userProfileController.store);
+router.put('/user_profile/:id', authenticate, userProfileController.update);
+router.delete('/user_profile/:id', authenticate, userProfileController.destroy);
 
 router.get('/product_category', authenticate, productCategoryController.index);
 router.get('/product_category/:id', authenticate, productCategoryController.show);

@@ -44,7 +44,7 @@ exports.store = async (req, res) => {
         if (!category)
             throw { message: '`category` não informada', status: 400 };
 
-        await validations.string(category.name, 'categoryName');
+        await validations.string(category.categoryName, 'categoryName');
 
         const result = await productCategoryModel.create(category);
 
@@ -66,7 +66,7 @@ exports.update = async (req, res) => {
 
         await validations.id(id);
 
-        await validations.string(category.name, 'categoryName');
+        await validations.string(category.categoryName, 'categoryName');
 
         if (!await productCategoryModel.get(id))
             throw { message: 'Categoria inexistente ou excluida', status: 404 };
